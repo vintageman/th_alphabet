@@ -11,7 +11,7 @@ A frontend prototype for learning the Thai alphabet with official-order sequenci
 ## Current prototype features
 - Seeded official-order consonants: **ก, ข, ฃ, ค, ฅ**.
 - Obsolete letters are marked (ฃ, ฅ).
-- Learn page includes a **Start Learning** button that jumps into the next unlearned card in official order and persists state in browser `localStorage`.
+- Learn page supports **Mark learned** and persists state in browser `localStorage`.
 - Revise page shows learned letters.
 - Quiz page generates deterministic glyph matching questions with optional obsolete inclusion.
 

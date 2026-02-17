@@ -49,17 +49,6 @@ export function isLearned(progress: ProgressState, letterId: string) {
   return progress.learnedLetterIds.includes(letterId);
 }
 
-export function markLearned(progress: ProgressState, letterId: string): ProgressState {
-  if (progress.learnedLetterIds.includes(letterId)) {
-    return progress;
-  }
-
-  return {
-    ...progress,
-    learnedLetterIds: [...progress.learnedLetterIds, letterId]
-  };
-}
-
 export function toggleLearned(progress: ProgressState, letterId: string): ProgressState {
   const isAlreadyLearned = progress.learnedLetterIds.includes(letterId);
 
