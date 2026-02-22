@@ -16,3 +16,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.thai-script {
+  font-family: 'TH Sarabun New', 'Sarabun', 'Noto Sans Thai', ui-sans-serif, system-ui, sans-serif;
+}

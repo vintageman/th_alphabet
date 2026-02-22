@@ -58,40 +58,52 @@ export function LearnPage() {
 
         {isSessionActive ? (
           currentLetter ? (
-            <div className="space-y-4 rounded-xl border border-slate-700 bg-slate-800/70 p-4">
-              <div className="flex items-center justify-between gap-2">
-                <div>
-                  <p className="text-xs uppercase tracking-wide text-slate-400">Current card</p>
-                  <h3 className="text-xl font-semibold text-slate-100">
-                    {currentLetter.official_order_index}. {currentLetter.glyph} —{' '}
-                    {currentLetter.romanization_teaching}
-                  </h3>
-                  <p className="text-sm text-slate-300">{currentLetter.name_th}</p>
-                </div>
-                {currentLetter.is_obsolete ? (
-                  <span className="rounded bg-obsolete px-2 py-1 text-xs text-white">Obsolete</span>
-                ) : null}
+            <div className="mx-auto w-full max-w-md space-y-5 rounded-2xl border border-slate-300 bg-white p-5 text-center text-black shadow-xl">
+              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                Card {currentLetter.official_order_index}
+              </p>
+
+              <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                <img
+                  alt={`Mnemonic for ${currentLetter.glyph}`}
+                  className="h-full w-full object-contain"
+                  src={currentLetter.image_asset}
+                />
               </div>
 
-              <p className="text-sm text-slate-300">{currentLetter.mnemonic}</p>
+              <div className="space-y-1">
+                <h3 className="thai-script text-[5rem] font-semibold leading-none">{currentLetter.glyph}</h3>
+                <p className="text-4xl font-semibold leading-tight">{currentLetter.romanization_teaching}</p>
+                <p className="thai-script text-3xl leading-tight text-slate-700">{currentLetter.name_th}</p>
+              </div>
 
-              <div className="flex flex-wrap gap-2">
+              <p className="text-lg text-slate-700">{currentLetter.mnemonic}</p>
+
+              <audio className="w-full" controls preload="none" src={currentLetter.pronunciation_audio} />
+
+              {currentLetter.is_obsolete ? (
+                <div className="rounded bg-obsolete px-2 py-1 text-sm text-white">Obsolete</div>
+              ) : null}
+
+              <div className="flex flex-wrap justify-center gap-2">
                 <button
-                  className="rounded bg-classLow px-3 py-1 text-xs font-medium text-slate-900"
+                  className="rounded bg-classLow px-3 py-1 text-sm font-medium text-slate-900"
                   onClick={handleMarkCurrentAsLearned}
                   type="button"
                 >
                   Mark learned & next
                 </button>
                 <button
-                  className="rounded bg-slate-700 px-3 py-1 text-xs text-slate-100"
-                  onClick={() => setSessionCursor((cursor) => Math.min(cursor + 1, Math.max(unlearnedLetters.length - 1, 0)))}
+                  className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
+                  onClick={() =>
+                    setSessionCursor((cursor) => Math.min(cursor + 1, Math.max(unlearnedLetters.length - 1, 0)))
+                  }
                   type="button"
                 >
                   Skip for now
                 </button>
                 <button
-                  className="rounded bg-slate-700 px-3 py-1 text-xs text-slate-100"
+                  className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
                   onClick={() => setIsSessionActive(false)}
                   type="button"
                 >
