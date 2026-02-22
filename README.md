@@ -1,4 +1,4 @@
-# Thai Alphabet Learning App (Prototype v0)
+# Thai Alphabet Learning App (Prototype v0.1.0)
 
 A frontend prototype for learning the Thai alphabet with official-order sequencing, obsolete-letter marking, local progress tracking, and lightweight deterministic quizzes.
 
@@ -11,7 +11,7 @@ A frontend prototype for learning the Thai alphabet with official-order sequenci
 ## Current prototype features
 - Seeded official-order consonants: **ก, ข, ฃ, ค, ฅ**.
 - Obsolete letters are marked (ฃ, ฅ).
-- Learn page supports **Mark learned** and persists state in browser `localStorage`.
+- Learn page includes a **Start Learning** button that jumps into the next unlearned card in official order and persists state in browser `localStorage`.
 - Revise page shows learned letters.
 - Quiz page generates deterministic glyph matching questions with optional obsolete inclusion.
 

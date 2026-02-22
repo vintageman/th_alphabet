@@ -2,6 +2,7 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from 're
 import {
   isLearned as isLearnedFromState,
   loadProgress,
+  markLearned as markLearnedFromState,
   saveProgress,
   toggleLearned as toggleLearnedFromState,
   type ProgressState
@@ -10,6 +11,7 @@ import {
 type ProgressContextValue = {
   progress: ProgressState;
   toggleLearned: (letterId: string) => void;
+  markLearned: (letterId: string) => void;
   setIncludeObsoleteInQuiz: (enabled: boolean) => void;
   isLearned: (letterId: string) => boolean;
 };
@@ -25,6 +27,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       toggleLearned: (letterId: string) => {
         setProgress((current) => {
           const next = toggleLearnedFromState(current, letterId);
+          saveProgress(next);
+          return next;
+        });
+      },
+      markLearned: (letterId: string) => {
+        setProgress((current) => {
+          const next = markLearnedFromState(current, letterId);
           saveProgress(next);
           return next;
         });

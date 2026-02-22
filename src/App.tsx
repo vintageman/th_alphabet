@@ -3,6 +3,7 @@ import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { LearnPage } from './pages/LearnPage';
 import { QuizPage } from './pages/QuizPage';
 import { RevisePage } from './pages/RevisePage';
+import packageJson from '../package.json';
 
 const navItems = [
   { to: '/learn', label: 'Learn' },
@@ -13,11 +14,15 @@ const navItems = [
 export function App() {
   const location = useLocation();
   const prefersReducedMotion = useReducedMotion();
+  const appVersion = packageJson.version;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-6">
-        <h1 className="text-xl font-semibold">Thai Alphabet Learning</h1>
+        <div>
+          <h1 className="text-xl font-semibold">Thai Alphabet Learning</h1>
+          <p className="text-xs text-slate-400">Prototype v{appVersion}</p>
+        </div>
         <nav className="flex gap-2">
           {navItems.map((item) => (
             <Link
