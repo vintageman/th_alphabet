@@ -9,8 +9,9 @@ A frontend prototype for learning the Thai alphabet with official-order sequenci
 - React Router
 
 ## Current prototype features
-- Seeded official-order consonants: **ก, ข, ฃ, ค, ฅ**.
+- Full official-order consonant dataset: **44 entries** (including obsolete ฃ, ฅ).
 - Obsolete letters are marked (ฃ, ฅ).
+- Vowel dataset is generated with **32 entries** for later learning-phase integration.
 - Learn page includes a **Start Learning** button that jumps into the next unlearned card in official order and persists state in browser `localStorage`.
 - Revise page shows learned letters.
 - Quiz page generates deterministic glyph matching questions with optional obsolete inclusion, tracked results, and a next-question flow.
