@@ -1,9 +1,4 @@
-import type { LetterDraft } from './types';
-
-/**
- * Full Thai consonant dataset in official order.
- */
-export const consonantSource: LetterDraft[] = [
+[
   {
     "id": "ko_kai",
     "glyph": "ก",
@@ -1460,4 +1455,4 @@ export const consonantSource: LetterDraft[] = [
     "frequency_tier": "core",
     "tone_behavior_notes": "Low-class consonant for Thai tone rules."
   }
-];
+]

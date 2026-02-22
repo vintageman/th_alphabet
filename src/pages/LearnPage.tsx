@@ -3,6 +3,32 @@ import { consonantSource } from '../../content/source/consonants.source';
 import { PrototypeCard } from '../components/PrototypeCard';
 import { useProgress } from '../lib/ProgressContext';
 
+function getConsonantClassColor(consonantClass: 'middle' | 'high' | 'low' | null) {
+  if (consonantClass === 'middle') {
+    return 'text-classMiddle';
+  }
+  if (consonantClass === 'high') {
+    return 'text-classHigh';
+  }
+  if (consonantClass === 'low') {
+    return 'text-classLow';
+  }
+  return 'text-slate-900';
+}
+
+function getToneGuidance(consonantClass: 'middle' | 'high' | 'low' | null) {
+  if (consonantClass === 'middle') {
+    return 'Tone guide: Middle-class consonant. Use this as the neutral reference group for foundational tone rule drills.';
+  }
+  if (consonantClass === 'high') {
+    return 'Tone guide: High-class consonant. Pair this with tone marks to practice high-class tone patterns.';
+  }
+  if (consonantClass === 'low') {
+    return 'Tone guide: Low-class consonant. This class often shifts tone outcomes compared with middle/high classes.';
+  }
+  return 'Tone guide: Not a consonant class item.';
+}
+
 export function LearnPage() {
   const { isLearned, markLearned, toggleLearned } = useProgress();
   const [isSessionActive, setIsSessionActive] = useState(false);
@@ -72,12 +98,25 @@ export function LearnPage() {
               </div>
 
               <div className="space-y-1">
-                <h3 className="thai-script text-[5rem] font-semibold leading-none">{currentLetter.glyph}</h3>
+                <h3
+                  className={`thai-script text-[5rem] font-semibold leading-none ${getConsonantClassColor(
+                    currentLetter.consonant_class
+                  )}`}
+                >
+                  {currentLetter.glyph}
+                </h3>
                 <p className="text-4xl font-semibold leading-tight">{currentLetter.romanization_teaching}</p>
                 <p className="thai-script text-3xl leading-tight text-slate-700">{currentLetter.name_th}</p>
               </div>
 
               <p className="text-lg text-slate-700">{currentLetter.mnemonic}</p>
+
+              <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-left">
+                <p className="text-sm font-semibold text-slate-700">Tone guidance</p>
+                <p className="mt-1 text-sm text-slate-600">
+                  {currentLetter.tone_behavior_notes ?? getToneGuidance(currentLetter.consonant_class)}
+                </p>
+              </div>
 
               <audio className="w-full" controls preload="none" src={currentLetter.pronunciation_audio} />
 

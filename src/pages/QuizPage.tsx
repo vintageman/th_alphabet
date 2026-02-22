@@ -5,8 +5,9 @@ import { useProgress } from '../lib/ProgressContext';
 import { generateGlyphToNameQuestion } from '../lib/quiz';
 
 export function QuizPage() {
-  const { progress, setIncludeObsoleteInQuiz } = useProgress();
+  const { progress, recordQuizResult, setIncludeObsoleteInQuiz } = useProgress();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [questionIndex, setQuestionIndex] = useState(0);
 
   const candidatePool = useMemo(() => {
     const learned = consonantSource.filter((letter) => progress.learnedLetterIds.includes(letter.id));
@@ -17,7 +18,33 @@ export function QuizPage() {
     );
   }, [progress.includeObsoleteInQuiz, progress.learnedLetterIds]);
 
-  const question = useMemo(() => generateGlyphToNameQuestion(candidatePool), [candidatePool]);
+  const question = useMemo(
+    () => generateGlyphToNameQuestion(candidatePool, questionIndex),
+    [candidatePool, questionIndex]
+  );
+
+  const totalAnswered = useMemo(
+    () =>
+      Object.values(progress.quizStatsByLetter).reduce((sum, stat) => sum + stat.correct + stat.wrong, 0),
+    [progress.quizStatsByLetter]
+  );
+
+  const currentStat = question ? progress.quizStatsByLetter[question.answerId] : undefined;
+
+  const handleSelectOption = (optionId: string) => {
+    if (!question || selectedOption) {
+      return;
+    }
+
+    const correct = optionId === question.answerId;
+    setSelectedOption(optionId);
+    recordQuizResult(question.answerId, correct);
+  };
+
+  const handleNextQuestion = () => {
+    setSelectedOption(null);
+    setQuestionIndex((index) => index + 1);
+  };
 
   return (
     <div className="space-y-4">
@@ -33,6 +60,8 @@ export function QuizPage() {
           />
           Include obsolete letters
         </label>
+
+        <p className="mb-3 text-xs text-slate-400">Tracked answers: {totalAnswered}</p>
 
         {!question ? (
           <p className="text-sm text-slate-300">Not enough letters to generate a quiz yet.</p>
@@ -57,7 +86,7 @@ export function QuizPage() {
                             : 'border-slate-700 opacity-60'
                     }`}
                     disabled={Boolean(selectedOption)}
-                    onClick={() => setSelectedOption(option.id)}
+                    onClick={() => handleSelectOption(option.id)}
                     type="button"
                   >
                     {option.label}
@@ -67,13 +96,27 @@ export function QuizPage() {
             </div>
 
             {selectedOption ? (
-              <button
-                className="rounded bg-slate-700 px-3 py-1 text-xs text-slate-100"
-                onClick={() => setSelectedOption(null)}
-                type="button"
-              >
-                Try again
-              </button>
+              <div className="space-y-2">
+                <p className="text-xs text-slate-400">
+                  This letter stats — correct: {currentStat?.correct ?? 0}, wrong: {currentStat?.wrong ?? 0}
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    className="rounded bg-classMiddle px-3 py-1 text-xs font-semibold text-slate-900"
+                    onClick={handleNextQuestion}
+                    type="button"
+                  >
+                    Next question
+                  </button>
+                  <button
+                    className="rounded bg-slate-700 px-3 py-1 text-xs text-slate-100"
+                    onClick={() => setSelectedOption(null)}
+                    type="button"
+                  >
+                    Retry same question
+                  </button>
+                </div>
+              </div>
             ) : null}
           </div>
         )}

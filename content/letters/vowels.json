@@ -1,9 +1,4 @@
-import type { LetterDraft } from './types';
-
-/**
- * Full Thai vowel dataset.
- */
-export const vowelSource: LetterDraft[] = [
+[
   {
     "id": "sara_a_short",
     "glyph": "ะ",
@@ -1060,4 +1055,4 @@ export const vowelSource: LetterDraft[] = [
     "frequency_tier": "extended",
     "tone_behavior_notes": "Vowel length and live/dead syllable interaction affect tone outcomes when combined with consonant class."
   }
-];
+]

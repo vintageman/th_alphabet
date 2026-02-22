@@ -3,6 +3,7 @@ import {
   isLearned as isLearnedFromState,
   loadProgress,
   markLearned as markLearnedFromState,
+  recordQuizResult as recordQuizResultFromState,
   saveProgress,
   toggleLearned as toggleLearnedFromState,
   type ProgressState
@@ -13,6 +14,7 @@ type ProgressContextValue = {
   toggleLearned: (letterId: string) => void;
   markLearned: (letterId: string) => void;
   setIncludeObsoleteInQuiz: (enabled: boolean) => void;
+  recordQuizResult: (letterId: string, isCorrect: boolean) => void;
   isLearned: (letterId: string) => boolean;
 };
 
@@ -41,6 +43,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       setIncludeObsoleteInQuiz: (enabled: boolean) => {
         setProgress((current) => {
           const next = { ...current, includeObsoleteInQuiz: enabled };
+          saveProgress(next);
+          return next;
+        });
+      },
+      recordQuizResult: (letterId: string, isCorrect: boolean) => {
+        setProgress((current) => {
+          const next = recordQuizResultFromState(current, letterId, isCorrect);
           saveProgress(next);
           return next;
         });

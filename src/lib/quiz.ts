@@ -4,15 +4,19 @@ export type QuizQuestion = {
   prompt: string;
   answerId: string;
   options: Array<{ id: string; label: string }>;
+  targetGlyph: string;
 };
 
-export function generateGlyphToNameQuestion(letters: LetterDraft[]): QuizQuestion | null {
+export function generateGlyphToNameQuestion(
+  letters: LetterDraft[],
+  questionIndex = 0
+): QuizQuestion | null {
   if (letters.length < 2) {
     return null;
   }
 
   const ordered = [...letters].sort((a, b) => a.official_order_index - b.official_order_index);
-  const target = ordered[0];
+  const target = ordered[questionIndex % ordered.length];
 
   const distractors = ordered
     .filter((letter) => letter.id !== target.id)
@@ -27,6 +31,7 @@ export function generateGlyphToNameQuestion(letters: LetterDraft[]): QuizQuestio
   return {
     prompt: `Which option matches the letter ${target.glyph}?`,
     answerId: target.id,
-    options
+    options,
+    targetGlyph: target.glyph
   };
 }
