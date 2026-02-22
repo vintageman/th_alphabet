@@ -1,18 +1,17 @@
 import { useMemo, useRef, useState } from 'react';
-import { consonantSource } from '../../content/source/consonants.source';
+import { vowelSource } from '../../content/source/vowels.source';
 import { LetterStudyCard } from '../components/LetterStudyCard';
 import { PrototypeCard } from '../components/PrototypeCard';
-import { ToneRuleCard } from '../components/ToneRuleCard';
 import { useProgress } from '../lib/ProgressContext';
 
-export function LearnPage() {
+export function LearnVowelsPage() {
   const { isLearned, markLearned, toggleLearned } = useProgress();
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [sessionCursor, setSessionCursor] = useState(0);
   const activeCardRef = useRef<HTMLDivElement | null>(null);
 
   const orderedLetters = useMemo(
-    () => [...consonantSource].sort((a, b) => a.official_order_index - b.official_order_index),
+    () => [...vowelSource].sort((a, b) => a.official_order_index - b.official_order_index),
     []
   );
 
@@ -57,8 +56,8 @@ export function LearnPage() {
   return (
     <div className="space-y-4">
       <PrototypeCard
-        description="Browse cards in official order. Use arrows or click from the letter list."
-        title="Learn Consonants"
+        description="Vowels in this section: 18 monophthongs (9 short and 9 long), 6 diphthongs (3 short and 3 long), and 8 special vowel sounds."
+        title="Learn Vowels"
       >
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <button
@@ -77,68 +76,66 @@ export function LearnPage() {
         {isSessionActive ? (
           currentLetter ? (
             <div ref={activeCardRef}>
-              <div className="grid items-stretch gap-4 xl:grid-cols-2">
-                <LetterStudyCard
-                  className="h-full max-w-none"
-                  footer={
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <button
-                        className="rounded bg-classLow px-3 py-1 text-sm font-medium text-slate-900"
-                        onClick={handleMarkCurrentAsLearned}
-                        type="button"
-                      >
-                        Mark learned
-                      </button>
-                      <button
-                        className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
-                        onClick={() => setSessionCursor((cursor) => Math.max(0, cursor - 1))}
-                        type="button"
-                      >
-                        ← Prev
-                      </button>
-                      <button
-                        className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
-                        onClick={() => setSessionCursor((cursor) => Math.min(cursor + 1, orderedLetters.length - 1))}
-                        type="button"
-                      >
-                        Next →
-                      </button>
-                      <button
-                        className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
-                        onClick={() => setIsSessionActive(false)}
-                        type="button"
-                      >
-                        End session
-                      </button>
-                    </div>
-                  }
-                  header={
-                    <div className="flex items-center justify-between gap-2">
-                      <button
-                        className="rounded bg-slate-700 px-2 py-1 text-sm text-white disabled:opacity-50"
-                        disabled={safeCursor <= 0}
-                        onClick={() => setSessionCursor((cursor) => Math.max(0, cursor - 1))}
-                        type="button"
-                      >
-                        ←
-                      </button>
-                      <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-                        Card {safeCursor + 1}/{orderedLetters.length}
-                      </p>
-                      <button
-                        className="rounded bg-slate-700 px-2 py-1 text-sm text-white disabled:opacity-50"
-                        disabled={safeCursor >= orderedLetters.length - 1}
-                        onClick={() => setSessionCursor((cursor) => Math.min(cursor + 1, orderedLetters.length - 1))}
-                        type="button"
-                      >
-                        →
-                      </button>
-                    </div>
-                  }
-                  letter={currentLetter}
-                />
-                <ToneRuleCard className="h-full max-w-none" consonantClass={currentLetter.consonant_class} />
-              </div>
+              <LetterStudyCard
+                className="h-full max-w-none"
+                showImage={false}
+                footer={
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <button
+                      className="rounded bg-classLow px-3 py-1 text-sm font-medium text-slate-900"
+                      onClick={handleMarkCurrentAsLearned}
+                      type="button"
+                    >
+                      Mark learned
+                    </button>
+                    <button
+                      className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
+                      onClick={() => setSessionCursor((cursor) => Math.max(0, cursor - 1))}
+                      type="button"
+                    >
+                      {'<- Prev'}
+                    </button>
+                    <button
+                      className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
+                      onClick={() => setSessionCursor((cursor) => Math.min(cursor + 1, orderedLetters.length - 1))}
+                      type="button"
+                    >
+                      {'Next ->'}
+                    </button>
+                    <button
+                      className="rounded bg-slate-700 px-3 py-1 text-sm text-white"
+                      onClick={() => setIsSessionActive(false)}
+                      type="button"
+                    >
+                      End session
+                    </button>
+                  </div>
+                }
+                header={
+                  <div className="flex items-center justify-between gap-2">
+                    <button
+                      className="rounded bg-slate-700 px-2 py-1 text-sm text-white disabled:opacity-50"
+                      disabled={safeCursor <= 0}
+                      onClick={() => setSessionCursor((cursor) => Math.max(0, cursor - 1))}
+                      type="button"
+                    >
+                      {'<-'}
+                    </button>
+                    <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                      Card {safeCursor + 1}/{orderedLetters.length}
+                    </p>
+                    <button
+                      className="rounded bg-slate-700 px-2 py-1 text-sm text-white disabled:opacity-50"
+                      disabled={safeCursor >= orderedLetters.length - 1}
+                      onClick={() => setSessionCursor((cursor) => Math.min(cursor + 1, orderedLetters.length - 1))}
+                      type="button"
+                    >
+                      {'->'}
+                    </button>
+                  </div>
+                }
+                letter={currentLetter}
+              />
             </div>
           ) : (
             <div className="rounded-xl border border-classLow/50 bg-classLow/10 p-4 text-sm text-slate-100">
@@ -147,14 +144,14 @@ export function LearnPage() {
           )
         ) : (
           <p className="text-sm text-slate-300">
-            Tap <strong>Start Learning</strong> or click a letter from the list below.
+            Tap <strong>Start Learning</strong> or click a vowel from the list below.
           </p>
         )}
       </PrototypeCard>
 
       <PrototypeCard
         description="Click any row to open that card. Learned toggle is kept for progress control."
-        title="Letter list"
+        title="Vowel list"
       >
         <ul className="space-y-2 text-sm text-slate-300">
           {orderedLetters.map((letter) => {

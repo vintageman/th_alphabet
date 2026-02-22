@@ -1,11 +1,4 @@
-import type { LetterDraft } from './types';
-import { attachResolvedPronunciationAudio } from './audio-resolver';
-import { attachResolvedTones } from './tone-resolver';
-
-/**
- * Full Thai consonant dataset in official order.
- */
-const consonantSourceBase: LetterDraft[] = [
+[
   {
     "id": "ko_kai",
     "glyph": "ก",
@@ -1462,8 +1455,4 @@ const consonantSourceBase: LetterDraft[] = [
     "frequency_tier": "core",
     "tone_behavior_notes": "Low-class consonant for Thai tone rules."
   }
-];
-
-export const consonantSource: LetterDraft[] = attachResolvedTones(
-  attachResolvedPronunciationAudio(consonantSourceBase)
-);
+]

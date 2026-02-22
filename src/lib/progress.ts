@@ -6,16 +6,24 @@ export type QuizLetterStat = {
   lastSeenAt: string;
 };
 
+export type FlashcardLetterStat = {
+  correct: number;
+  wrong: number;
+  lastSeenAt: string;
+};
+
 export type ProgressState = {
   learnedLetterIds: string[];
   includeObsoleteInQuiz: boolean;
   quizStatsByLetter: Record<string, QuizLetterStat>;
+  flashcardStatsByLetter: Record<string, FlashcardLetterStat>;
 };
 
 const defaultProgress: ProgressState = {
   learnedLetterIds: [],
   includeObsoleteInQuiz: false,
-  quizStatsByLetter: {}
+  quizStatsByLetter: {},
+  flashcardStatsByLetter: {}
 };
 
 function canUseStorage() {
@@ -34,9 +42,13 @@ export function loadProgress(): ProgressState {
 
   try {
     const parsed = JSON.parse(raw) as Partial<ProgressState>;
-    const safeStats =
+    const safeQuizStats =
       parsed.quizStatsByLetter && typeof parsed.quizStatsByLetter === 'object'
         ? parsed.quizStatsByLetter
+        : {};
+    const safeFlashcardStats =
+      parsed.flashcardStatsByLetter && typeof parsed.flashcardStatsByLetter === 'object'
+        ? parsed.flashcardStatsByLetter
         : {};
 
     return {
@@ -45,8 +57,21 @@ export function loadProgress(): ProgressState {
         : [],
       includeObsoleteInQuiz: Boolean(parsed.includeObsoleteInQuiz),
       quizStatsByLetter: Object.fromEntries(
-        Object.entries(safeStats).map(([letterId, stat]) => {
+        Object.entries(safeQuizStats).map(([letterId, stat]) => {
           const record = (stat ?? {}) as Partial<QuizLetterStat>;
+          return [
+            letterId,
+            {
+              correct: Number(record.correct ?? 0),
+              wrong: Number(record.wrong ?? 0),
+              lastSeenAt: typeof record.lastSeenAt === 'string' ? record.lastSeenAt : ''
+            }
+          ];
+        })
+      ),
+      flashcardStatsByLetter: Object.fromEntries(
+        Object.entries(safeFlashcardStats).map(([letterId, stat]) => {
+          const record = (stat ?? {}) as Partial<FlashcardLetterStat>;
           return [
             letterId,
             {
@@ -115,6 +140,27 @@ export function recordQuizResult(
     ...progress,
     quizStatsByLetter: {
       ...progress.quizStatsByLetter,
+      [letterId]: next
+    }
+  };
+}
+
+export function recordFlashcardResult(
+  progress: ProgressState,
+  letterId: string,
+  isCorrect: boolean
+): ProgressState {
+  const current = progress.flashcardStatsByLetter[letterId] ?? { correct: 0, wrong: 0, lastSeenAt: '' };
+  const next: FlashcardLetterStat = {
+    correct: current.correct + (isCorrect ? 1 : 0),
+    wrong: current.wrong + (isCorrect ? 0 : 1),
+    lastSeenAt: new Date().toISOString()
+  };
+
+  return {
+    ...progress,
+    flashcardStatsByLetter: {
+      ...progress.flashcardStatsByLetter,
       [letterId]: next
     }
   };

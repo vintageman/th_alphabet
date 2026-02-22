@@ -1,14 +1,14 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { FlashcardsPage } from './pages/FlashcardsPage';
 import { LearnPage } from './pages/LearnPage';
-import { QuizPage } from './pages/QuizPage';
-import { RevisePage } from './pages/RevisePage';
+import { LearnVowelsPage } from './pages/LearnVowelsPage';
 import packageJson from '../package.json';
 
 const navItems = [
-  { to: '/learn', label: 'Learn' },
-  { to: '/revise', label: 'Revise' },
-  { to: '/quiz', label: 'Quiz' }
+  { to: '/learn-consonants', label: 'Learn Consonants' },
+  { to: '/learn-vowels', label: 'Learn Vowels' },
+  { to: '/flashcards', label: 'Flashcards' }
 ];
 
 export function App() {
@@ -49,8 +49,11 @@ export function App() {
             <Routes location={location}>
               <Route element={<LearnPage />} path="/" />
               <Route element={<LearnPage />} path="/learn" />
-              <Route element={<RevisePage />} path="/revise" />
-              <Route element={<QuizPage />} path="/quiz" />
+              <Route element={<LearnPage />} path="/learn-consonants" />
+              <Route element={<LearnVowelsPage />} path="/learn-vowels" />
+              <Route element={<FlashcardsPage />} path="/flashcards" />
+              <Route element={<Navigate replace to="/flashcards" />} path="/revise" />
+              <Route element={<Navigate replace to="/flashcards" />} path="/quiz" />
             </Routes>
           </motion.div>
         </AnimatePresence>

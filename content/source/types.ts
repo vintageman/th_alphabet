@@ -3,6 +3,7 @@ export type ScriptType = 'consonant' | 'vowel';
 export type ConsonantClass = 'middle' | 'high' | 'low';
 
 export type FrequencyTier = 'core' | 'common' | 'extended';
+export type ToneLabel = 'mid' | 'low' | 'falling' | 'high' | 'rising';
 
 export type SampleWord = {
   th: string;
@@ -27,6 +28,7 @@ export type LetterDraft = {
   sample_words: SampleWord[];
   image_asset: string;
   tags: string[];
+  tones?: ToneLabel[];
   ipa?: string;
   frequency_tier?: FrequencyTier;
   notes?: string;

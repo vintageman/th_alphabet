@@ -1,9 +1,11 @@
 import type { LetterDraft } from './types';
+import { attachResolvedPronunciationAudio } from './audio-resolver';
+import { attachResolvedTones } from './tone-resolver';
 
 /**
  * Full Thai vowel dataset.
  */
-export const vowelSource: LetterDraft[] = [
+const vowelSourceBase: LetterDraft[] = [
   {
     "id": "sara_a_short",
     "glyph": "ะ",
@@ -1061,3 +1063,7 @@ export const vowelSource: LetterDraft[] = [
     "tone_behavior_notes": "Vowel length and live/dead syllable interaction affect tone outcomes when combined with consonant class."
   }
 ];
+
+export const vowelSource: LetterDraft[] = attachResolvedTones(
+  attachResolvedPronunciationAudio(vowelSourceBase)
+);
