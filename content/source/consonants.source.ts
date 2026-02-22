@@ -1,0 +1,117 @@
+import type { LetterDraft } from './types';
+
+/**
+ * Seed set for the first official-order consonants requested for prototype v0:
+ * ก, ข, ฃ, ค, ฅ
+ */
+export const consonantSource: LetterDraft[] = [
+  {
+    id: 'ko_kai',
+    glyph: 'ก',
+    name_th: 'ไก่',
+    romanization_rtgs: 'ko kai',
+    romanization_teaching: 'gor gai',
+    script_type: 'consonant',
+    consonant_class: 'middle',
+    official_order_index: 1,
+    is_obsolete: false,
+    pronunciation_audio: '/assets/audio/letters/ko_kai.mp3',
+    mnemonic: 'Looks like a chicken neck and head bend.',
+    shape_description: 'Single looping form with a hook-like finish.',
+    writing_steps: ['Start near top', 'Curve downward and around', 'Finish with a short hook'],
+    sample_words: [
+      { th: 'ไก่', rtgs: 'kai', en: 'chicken' },
+      { th: 'กีฬา', rtgs: 'kila', en: 'sport' }
+    ],
+    image_asset: '/assets/images/mnemonics/chicken.webp',
+    tags: ['official-order', 'starter'],
+    frequency_tier: 'core',
+    tone_behavior_notes: 'Middle-class consonant for tone-rule practice.'
+  },
+  {
+    id: 'kho_khai',
+    glyph: 'ข',
+    name_th: 'ไข่',
+    romanization_rtgs: 'kho khai',
+    romanization_teaching: 'khor khai',
+    script_type: 'consonant',
+    consonant_class: 'high',
+    official_order_index: 2,
+    is_obsolete: false,
+    pronunciation_audio: '/assets/audio/letters/kho_khai.mp3',
+    mnemonic: 'Think of the rounded shape of an egg.',
+    shape_description: 'Curved outer line with inner loop detail.',
+    writing_steps: ['Start with upper curve', 'Draw the body loop', 'Close with rightward finish'],
+    sample_words: [
+      { th: 'ไข่', rtgs: 'khai', en: 'egg' },
+      { th: 'ขอ', rtgs: 'kho', en: 'to request' }
+    ],
+    image_asset: '/assets/images/mnemonics/egg.webp',
+    tags: ['official-order', 'starter'],
+    frequency_tier: 'core',
+    tone_behavior_notes: 'High-class consonant.'
+  },
+  {
+    id: 'kho_khuat',
+    glyph: 'ฃ',
+    name_th: 'ขวด',
+    romanization_rtgs: 'kho khuat',
+    romanization_teaching: 'khor khuat',
+    script_type: 'consonant',
+    consonant_class: 'high',
+    official_order_index: 3,
+    is_obsolete: true,
+    pronunciation_audio: '/assets/audio/letters/kho_khuat.mp3',
+    mnemonic: 'Historic bottle-associated consonant.',
+    shape_description: 'Visually related to ข with additional distinct stroke shape.',
+    writing_steps: ['Start upper stroke', 'Draw outer curve', 'Add inner detail'],
+    sample_words: [{ th: 'ขวด', rtgs: 'khuat', en: 'bottle' }],
+    image_asset: '/assets/images/mnemonics/bottle.webp',
+    tags: ['official-order', 'obsolete', 'starter'],
+    frequency_tier: 'extended',
+    notes: 'Obsolete in modern Thai usage.'
+  },
+  {
+    id: 'kho_khwai',
+    glyph: 'ค',
+    name_th: 'ควาย',
+    romanization_rtgs: 'kho khwai',
+    romanization_teaching: 'kor kwai',
+    script_type: 'consonant',
+    consonant_class: 'low',
+    official_order_index: 4,
+    is_obsolete: false,
+    pronunciation_audio: '/assets/audio/letters/kho_khwai.mp3',
+    mnemonic: 'Imagine buffalo horns in the upper curves.',
+    shape_description: 'Rounded form with open upper curve and tail.',
+    writing_steps: ['Begin top-left', 'Sweep curve rightward', 'Drop and finish tail'],
+    sample_words: [
+      { th: 'ควาย', rtgs: 'khwai', en: 'buffalo' },
+      { th: 'คน', rtgs: 'khon', en: 'person' }
+    ],
+    image_asset: '/assets/images/mnemonics/buffalo.webp',
+    tags: ['official-order', 'starter'],
+    frequency_tier: 'core',
+    tone_behavior_notes: 'Low-class consonant.'
+  },
+  {
+    id: 'kho_khon',
+    glyph: 'ฅ',
+    name_th: 'คน',
+    romanization_rtgs: 'kho khon',
+    romanization_teaching: 'kor kon',
+    script_type: 'consonant',
+    consonant_class: 'low',
+    official_order_index: 5,
+    is_obsolete: true,
+    pronunciation_audio: '/assets/audio/letters/kho_khon.mp3',
+    mnemonic: 'Historic character once tied to the word for person.',
+    shape_description: 'Related to ค with distinguishing upper stroke pattern.',
+    writing_steps: ['Start with upper curve', 'Draw main body', 'Finish with right tail'],
+    sample_words: [{ th: 'คน', rtgs: 'khon', en: 'person' }],
+    image_asset: '/assets/images/mnemonics/person.webp',
+    tags: ['official-order', 'obsolete', 'starter'],
+    frequency_tier: 'extended',
+    notes: 'Obsolete in modern Thai usage.'
+  }
+];
