@@ -46,3 +46,11 @@ A frontend prototype for learning the Thai alphabet with official-order sequenci
 - `content/source/types.ts`
 
 These typed source modules are the canonical authored data for upcoming dataset build scripts.
+
+
+## Generated dataset JSON
+- `content/letters/consonants.json`
+- `content/letters/vowels.json`
+- `content/lessons/learning_path.json`
+
+These files are ready for manual asset population. You can now add image/audio files at the referenced `image_asset` and `pronunciation_audio` paths.
